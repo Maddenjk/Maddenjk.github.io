@@ -261,7 +261,7 @@ function DiceRoller() {
       </div>
       <div className="row">
         <label htmlFor='result'>Result</label>
-        <textarea className="form-control" rows={8} id="result"></textarea>
+        <textarea className="form-control" disabled={true} rows={8} id="result"></textarea>
       </div>
       {/* TODO Add Custom die logic here */}
     </div>
