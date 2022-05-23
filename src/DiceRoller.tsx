@@ -92,6 +92,8 @@ function DiceRoller() {
       $(`#D${diceType}Amount`).val("")
       $(`#D${diceType}Mod`).val("")
       $(`#D${diceType}NumberToBeat`).val("")
+      $(`#total`).text("")
+      $(`#successes`).text("")
     })
   }
 
