@@ -22,14 +22,14 @@ function DiceRoller() {
         <input className="form-check-input" type="radio" name="RollerChoice" defaultChecked
           id="DicePoolSystem" onChange={chooseRollerCheck} />
         <label className="form-check-label" htmlFor="DicePoolSystem">
-          Default radio
+          Dice Pool System
         </label>
       </div>
       <div className="form-check">
         <input className="form-check-input" type="radio" name="RollerChoice"
           id="d20System" onChange={chooseRollerCheck} />
         <label className="form-check-label" htmlFor="d20System">
-          Default checked radio
+          D20 System
         </label>
       </div>
       {roller}
