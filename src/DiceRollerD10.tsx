@@ -105,17 +105,17 @@ function DiceRollerD10() {
         </label>
       </div>
       <div className="row">
-        <div className="col-2">
+        <div className="col col-sm">
           <label className="form-label" htmlFor='NumberToBeat'>Number to Beat</label>
           <input type="text" onFocus={clearResult} className="form-control"
             id="NumberToBeat" aria-label="NumberToBeat" />
         </div>
-        <div className="col-1">
+        <div className="col col-sm">
           <label className="form-label" htmlFor='MaxRoll'>Max Roll</label>
           <input type="text" onFocus={clearResult} className="form-control"
             id="MaxRoll" aria-label="MaxRoll" />
         </div>
-        <div className="col-2">
+        <div className="col col-sm">
           <label className="form-label" htmlFor='Amount'>Amount of Dice</label>
           <input type="text" onFocus={clearResult} className="form-control"
             id="Amount" aria-label="Amount" />

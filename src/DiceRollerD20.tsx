@@ -59,14 +59,14 @@ function DiceRollerD20() {
       let ModLabel = `D${diceType}Mod`;
       diceArray.push(
         <div className="row">
-          <div className="col-1">
+          <div className="col-2">
             <p aria-label={textLabel} id={textLabel}>{diceTypeLabel}</p>
           </div>
-          <div className="col-2">
+          <div className="col-3">
             <input type="text" onFocus={clearResult} className="form-control" 
             id={AmountLabel} aria-label={AmountLabel} />
           </div>
-          <div className="col-9">
+          <div className="col-7">
             <input type="text" onFocus={clearResult} className="form-control" 
             id={ModLabel} aria-label={ModLabel} />
           </div>
@@ -78,9 +78,9 @@ function DiceRollerD20() {
   return (
     <div>
       <div className="row">
-        <p className="col-1">Type</p>
-        <p className="col-2">Amount of Dice</p>
-        <p className="col-3">Modifiers (comma seperated)</p>
+        <p className="col-2">Type</p>
+        <p className="col-3">Amount of Dice</p>
+        <p className="col-7">Modifiers (comma seperated)</p>
       </div>
       <>{GenerateDice() || null}</>
       <div className="row">
