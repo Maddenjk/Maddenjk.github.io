@@ -1,151 +1,167 @@
 import React from 'react';
-import $ from 'jquery';
 
 function DiceRollerD10() {
 
-  function RollDiceButtonClick(event: any) {
-    if ($(`#Amount`) !== undefined && $(`#Amount`).val() !== "" &&
-      $(`#MaxRoll`) !== undefined && $(`#MaxRoll`).val() !== "") {
-      let MaxRoll = Number.parseInt(($(`#MaxRoll`).val()?.toString() || "0"));
-      let diceCount = Number.parseInt(($(`#Amount`).val()?.toString() || "0"));
-      let modAmount = $(`#Mod`).val() || "";
-      let modArray: string[] = []
-      if (modAmount) {
-        modArray = modAmount.toString().split(',')
-      }
-      rollForSuccesses(MaxRoll, diceCount, modArray);
-    }
-  }
+    // Values set by the user
+    let [explodeMax, setExplodeMax] = React.useState(false)
+    let [oneRemovesSuccess, setOneRemovesSuccess] = React.useState(false)
+    let [maxCountsTwice, setMaxCountsTwice] = React.useState(false)
+    let [numberToBeat, setNumberToBeat] = React.useState("")
+    let [amountOfDice, setAmountOfDice] = React.useState("")
+    let [maxRoll, setMaxRoll] = React.useState("")
+    let [modifierString, setModifierString] = React.useState("")
 
-  function rollForSuccesses(MaxRoll: number, diceCount: number, modArray: string[]) {
-    let values = []
-    let sucesses = 0;
-    let extraDiceCount = 0
+    // Calculated values
+    let [results, setResults] = React.useState("")
 
-    let numberToBeat = $(`#NumberToBeat`).val() || 0;
-    for (let index = 0; index < diceCount; index++) {
-      let value = Math.floor(Math.random() * MaxRoll);
-      value += 1
-      if (value === 1 && $("#1RemovesSuccess").is(':checked')) {
-        sucesses -= 1;
-      }
-      if (value >= MaxRoll) {
-        if ($("#explodeMax").is(':checked')) {
-          extraDiceCount += 1;
+    function rollDice() {
+        let modifiers: string[] = []
+        let values = []
+        let sucesses = 0;
+        let extraDiceCount = 0
+
+        if (modifierString) {
+            if (modifierString.length > 0) {
+                modifiers = modifierString.split(' ')
+            }
         }
-        if ($("#MaxCount2").is(':checked')) {
-          sucesses += 1;
-        }
-      }
-      value += +modArray[index] || 0;
-      if (value >= numberToBeat) {
-        sucesses += 1;
-      }
 
-      values.push(value);
+        for (let index = 0; index < +amountOfDice || 0; index++) {
+            let value = Math.floor(Math.random() * +maxRoll);
+            value += 1
+            if (value === 1 && oneRemovesSuccess) {
+                sucesses -= 1;
+            }
+            if (value >= +maxRoll) {
+                if (explodeMax) {
+                    extraDiceCount += 1;
+                }
+                if (maxCountsTwice) {
+                    sucesses += 1;
+                }
+            }
+            value += +modifiers[index] || 0;
+            if (value >= +numberToBeat) {
+                sucesses += 1;
+            }
+
+            values.push(value);
+        }
+
+        for (let index = 0; index < extraDiceCount; index++) {
+            let value = Math.floor(Math.random() * +maxRoll);
+            value += 1
+            if (value >= +maxRoll) {
+                if (explodeMax) {
+                    extraDiceCount += 1;
+                }
+                if (maxCountsTwice) {
+                    sucesses += 1;
+                }
+            }
+            value += +modifiers[index] || 0;
+            if (value >= +numberToBeat) {
+                sucesses += 1;
+            }
+
+            values.push(value);
+        }
+
+        let newResults = results
+        if (newResults) {
+            newResults += "\n"
+        }
+        newResults += `D${maxRoll}: ` + values.join(", ")
+        newResults += "\nSuccesses = " + sucesses
+        setResults(newResults)
     }
 
-    for (let index = 0; index < extraDiceCount; index++) {
-      let value = Math.floor(Math.random() * +MaxRoll);
-      value += 1
-      if (value >= MaxRoll) {
-        if ($("#explodeMax").is(':checked')) {
-          extraDiceCount += 1;
-        }
-        if ($("#MaxCount2").is(':checked')) {
-          sucesses += 1;
-        }
-      }
-      value += +modArray[index] || 0;
-      if (value >= numberToBeat) {
-        sucesses += 1;
-      }
-
-      values.push(value);
+    const clearResult = () => {
+        setResults("")
     }
 
-    if ($("#result").text()) {
-      $("#result").text($("#result").text() + "\n")
+    const clear = () => {
+        setNumberToBeat("")
+        setAmountOfDice("")
+        setModifierString("")
+        setMaxRoll("")
+        setResults("")
     }
-    $("#result").text($("#result").text() + `D${MaxRoll}: ` + values.join(", "))
-    $("#result").text($("#result").text() + "\nSuccesses = " + sucesses)
-    return sucesses;
-  }
 
-  const clearResult = () => {
-    $("#result").text("")
-  }
-
-  const clear = () => {
-    $("#result").text("")
-    $(`#Amount`).val("")
-    $(`#Mod`).val("")
-    $(`#NumberToBeat`).val("")
-    $(`#MaxRoll`).val("")
-  }
-
-  return (
-    <div className="form">
-      <div className="form-check">
-        <input className="form-check-input" type="checkbox" value="" id="explodeMax" />
-        <label className="form-check-label" htmlFor="explodeMax">
-          Explode Dice When Max Dice Roll Is Hit
-        </label>
-      </div>
-      <div className="form-check">
-        <input className="form-check-input" type="checkbox" value="" id="1RemovesSuccess" />
-        <label className="form-check-label" htmlFor="1RemovesSuccess">
-          Roll of 1 Removes a Success, unless on exploded dice
-        </label>
-      </div>
-      <div className="form-check">
-        <input className="form-check-input" type="checkbox" value="" id="MaxCount2" />
-        <label className="form-check-label" htmlFor="MaxCount2">
-          Max Rolls Counts as Two Successes
-        </label>
-      </div>
-      <div className="row">
-        <div className="col col-sm">
-          <label className="form-label" htmlFor='NumberToBeat'>Number to Beat</label>
-          <input type="text" onFocus={clearResult} className="form-control"
-            id="NumberToBeat" aria-label="NumberToBeat" />
-        </div>
-        <div className="col col-sm">
-          <label className="form-label" htmlFor='MaxRoll'>Max Roll</label>
-          <input type="text" onFocus={clearResult} className="form-control"
-            id="MaxRoll" aria-label="MaxRoll" />
-        </div>
-        <div className="col col-sm">
-          <label className="form-label" htmlFor='Amount'>Amount of Dice</label>
-          <input type="text" onFocus={clearResult} className="form-control"
-            id="Amount" aria-label="Amount" />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
-        <label className="form-label" htmlFor='Mod'>Modifiers, comma seperated</label>
-          <input type="text" onFocus={clearResult} className="form-control"
-            id="Mod" aria-label="Mod" />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <div className="btn-group form">
-            <button type="button" onClick={RollDiceButtonClick}>Roll</button>
-            <div className="pull-right">
-              <button type="button" onClick={clear}>Clear</button>
+    return (
+        <div className="form">
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="ExplodeMax"
+                    onChange={(event) => { setExplodeMax(event.target.value !== "" || false) }} />
+                <label className="form-check-label" htmlFor="ExplodeMax">
+                    Explode Dice When Max Dice Roll Is Hit
+                </label>
             </div>
-          </div>
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="OneRemovesSuccess"
+                    onChange={(event) => { setOneRemovesSuccess(event.target.value !== "" || false) }} />
+                <label className="form-check-label" htmlFor="OneRemovesSuccess">
+                    Roll of 1 Removes a Success, unless on exploded dice
+                </label>
+            </div>
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="MaxCountsTwice"
+                    onChange={(event) => { setMaxCountsTwice(event.target.value !== "" || false) }} />
+                <label className="form-check-label" htmlFor="MaxCountsTwice">
+                    Max Rolls Counts as Two Successes
+                </label>
+            </div>
+            <div className="row">
+                <div className="col-12">
+                    <label className="form-label" htmlFor='NumberToBeat'>Number to Beat</label>
+                    <input type="text" onFocus={clearResult} className="form-control col-3"
+                        id="NumberToBeat" aria-label="NumberToBeat" value={numberToBeat}
+                        onChange={(e) => { setNumberToBeat(e.target.value) }} />
+                </div>
+                <div className="col-5 col-md-2 col-lg-2 col-xl-2 mr-3">
+                    <label className="form-label" htmlFor="MaxRoll">Dice Type</label>
+                    <div className='form-inline'>
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">D</div>
+                        </div>
+                        <input type="text" className="form-control col" value={maxRoll}
+                            onChange={(e) => { setMaxRoll(e.target.value) }}
+                            id="MaxRoll" aria-label="MaxRoll" />
+                    </div>
+                </div>
+                <div className="col-11">
+                    <label className="form-label" htmlFor='Amount'>Amount of Dice</label>
+                    <input type="text" onFocus={clearResult} className="form-control col-3" value={amountOfDice}
+                        onChange={(e) => { setAmountOfDice(e.target.value) }}
+                        id="Amount" aria-label="Amount" />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-11 mr-3 mb-2">
+                    <label className="form-label" htmlFor='Mod'>Modifiers (Space Seperated)</label>
+                    <input type="text" onFocus={clearResult} className="form-control" value={modifierString}
+                        onChange={(e) => { setModifierString(e.target.value) }}
+                        id="Mod" aria-label="Mod" />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col">
+                    <div className="btn-group form">
+                        <button type="button" onClick={rollDice}>Roll</button>
+                        <div className="pull-right">
+                            <button type="button" onClick={clear}>Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col">
+                    <label htmlFor='result'>Result</label>
+                    <textarea className="form-control" disabled={true} rows={8} id="result" value={results}></textarea>
+                </div>
+            </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <label htmlFor='result'>Result</label>
-          <textarea className="form-control" disabled={true} rows={8} id="result"></textarea>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 
