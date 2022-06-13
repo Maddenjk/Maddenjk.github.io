@@ -29,6 +29,7 @@ function DiceRollerD10() {
         for (let index = 0; index < +amountOfDice || 0; index++) {
             let value = Math.floor(Math.random() * +maxRoll);
             value += 1
+            console.log(explodeMax)
             if (value === 1 && oneRemovesSuccess) {
                 sucesses -= 1;
             }
@@ -92,21 +93,21 @@ function DiceRollerD10() {
         <div className="form">
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="ExplodeMax"
-                    onChange={(event) => { setExplodeMax(event.target.value !== "" || false) }} />
+                    onChange={(event) => { setExplodeMax(event.target.checked) }} />
                 <label className="form-check-label" htmlFor="ExplodeMax">
                     Explode Dice When Max Dice Roll Is Hit
                 </label>
             </div>
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="OneRemovesSuccess"
-                    onChange={(event) => { setOneRemovesSuccess(event.target.value !== "" || false) }} />
+                    onChange={(event) => { setOneRemovesSuccess(event.target.checked) }} />
                 <label className="form-check-label" htmlFor="OneRemovesSuccess">
                     Roll of 1 Removes a Success, unless on exploded dice
                 </label>
             </div>
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="MaxCountsTwice"
-                    onChange={(event) => { setMaxCountsTwice(event.target.value !== "" || false) }} />
+                    onChange={(event) => { setMaxCountsTwice(event.target.checked) }} />
                 <label className="form-check-label" htmlFor="MaxCountsTwice">
                     Max Rolls Counts as Two Successes
                 </label>
