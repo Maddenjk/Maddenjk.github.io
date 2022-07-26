@@ -9,22 +9,15 @@ function DiceRollerD10() {
     let [numberToBeat, setNumberToBeat] = React.useState("")
     let [amountOfDice, setAmountOfDice] = React.useState("")
     let [maxRoll, setMaxRoll] = React.useState("")
-    let [modifierString, setModifierString] = React.useState("")
+    let [autoSuccessString, setAutoSuccessString] = React.useState("")
 
     // Calculated values
     let [results, setResults] = React.useState("")
 
     function rollDice() {
-        let modifiers: string[] = []
         let values = []
         let sucesses = 0;
         let extraDiceCount = 0
-
-        if (modifierString) {
-            if (modifierString.length > 0) {
-                modifiers = modifierString.split(' ')
-            }
-        }
 
         for (let index = 0; index < +amountOfDice || 0; index++) {
             let value = Math.floor(Math.random() * +maxRoll);
@@ -41,7 +34,6 @@ function DiceRollerD10() {
                     sucesses += 1;
                 }
             }
-            value += +modifiers[index] || 0;
             if (value >= +numberToBeat) {
                 sucesses += 1;
             }
@@ -60,13 +52,16 @@ function DiceRollerD10() {
                     sucesses += 1;
                 }
             }
-            value += +modifiers[index] || 0;
+            value += +autoSuccessString || 0;
             if (value >= +numberToBeat) {
                 sucesses += 1;
             }
 
             values.push(value);
         }
+
+        // Add auto successes
+        sucesses += +autoSuccessString || 0;
 
         let newResults = results
         if (newResults) {
@@ -84,7 +79,7 @@ function DiceRollerD10() {
     const clear = () => {
         setNumberToBeat("")
         setAmountOfDice("")
-        setModifierString("")
+        setAutoSuccessString("")
         setMaxRoll("")
         setResults("")
     }
@@ -113,24 +108,28 @@ function DiceRollerD10() {
                 </label>
             </div>
             <div className="row">
-                <div className="col-12">
+                <div className="col-xl-5 col-lg-5 col-mid-5">
                     <label className="form-label" htmlFor='NumberToBeat'>Number to Beat</label>
                     <input type="text" onFocus={clearResult} className="form-control col-3"
                         id="NumberToBeat" aria-label="NumberToBeat" value={numberToBeat}
                         onChange={(e) => { setNumberToBeat(e.target.value) }} />
                 </div>
-                <div className="col-5 col-md-2 col-lg-2 col-xl-2 mr-3">
+            </div>
+            <div className="row">
+                <div style={{width: 132, marginLeft: 16}}>
                     <label className="form-label" htmlFor="MaxRoll">Dice Type</label>
                     <div className='form-inline'>
                         <div className="input-group-prepend">
                             <div className="input-group-text">D</div>
                         </div>
-                        <input type="text" className="form-control col" value={maxRoll}
+                        <input type="text" className="form-control col 1" value={maxRoll}
                             onChange={(e) => { setMaxRoll(e.target.value) }}
                             id="MaxRoll" aria-label="MaxRoll" />
                     </div>
                 </div>
-                <div className="col-11">
+            </div>
+            <div className='row'>
+                <div className="col-xl-5 col-lg-5 col-mid-5">
                     <label className="form-label" htmlFor='Amount'>Amount of Dice</label>
                     <input type="text" onFocus={clearResult} className="form-control col-3" value={amountOfDice}
                         onChange={(e) => { setAmountOfDice(e.target.value) }}
@@ -138,11 +137,11 @@ function DiceRollerD10() {
                 </div>
             </div>
             <div className="row">
-                <div className="col-11 mr-3 mb-2">
-                    <label className="form-label" htmlFor='Mod'>Modifiers (Space Seperated)</label>
-                    <input type="text" onFocus={clearResult} className="form-control" value={modifierString}
-                        onChange={(e) => { setModifierString(e.target.value) }}
-                        id="Mod" aria-label="Mod" />
+                <div className="col-xl-5 col-lg-5 col-mid-5 mr-3 mb-2">
+                    <label className="form-label" htmlFor='AutoSuccess'>Auto Successes</label>
+                    <input type="text" onFocus={clearResult} className="form-control col-3" value={autoSuccessString}
+                        onChange={(e) => { setAutoSuccessString(e.target.value) }}
+                        id="AutoSuccess" aria-label="AutoSuccess" />
                 </div>
             </div>
             <div className="row">
