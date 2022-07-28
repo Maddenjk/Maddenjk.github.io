@@ -147,9 +147,9 @@ function DiceRollerD10() {
             <div className="row">
                 <div className="col">
                     <div className="btn-group form">
-                        <button type="button" onClick={rollDice}>Roll</button>
+                        <button type="button" className="primaryButton bg-primary" onClick={rollDice}>Roll</button>
                         <div className="pull-right">
-                            <button type="button" onClick={clear}>Clear</button>
+                            <button type="button" className="secondaryButton" onClick={clear}>Clear</button>
                         </div>
                     </div>
                 </div>

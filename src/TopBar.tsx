@@ -6,12 +6,11 @@ import Container from 'react-bootstrap/Container';
 function TopBar() {
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
-        <Container>
+      <Navbar className='NavBar'>
           <Nav className="me-auto">
             <Nav.Link href="./DiceRoller">Dice Roller</Nav.Link>
+            <Nav.Link href="./Login">Work In Progress</Nav.Link>
           </Nav>
-        </Container>
       </Navbar>
     </div>
   );

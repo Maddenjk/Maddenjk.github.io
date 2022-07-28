@@ -1,13 +1,22 @@
 import React from 'react';
 import Page from './Page';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TopBar from './TopBar'
+import DiceRoller from './DiceRoller';
+import Login from './Login';
 
 function App() {
   return (
-    <div className="App">
-      <TopBar></TopBar>
-      <Page></Page>
-    </div>
+    <Router>
+      <div className="App">
+        <TopBar></TopBar>
+        <Routes>
+        <Route path='/' element={<DiceRoller/>} />
+        <Route path='/DiceRoller' element={<DiceRoller/>} />
+        <Route path='/Login' element={<Login/>} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
