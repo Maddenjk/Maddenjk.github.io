@@ -2,37 +2,37 @@ import React from 'react';
 import $ from 'jquery';
 import DiceRollerD10 from './DiceRollerD10';
 import DiceRollerD20 from './DiceRollerD20';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
 
 function DiceRoller() {
 
-  const [roller, setRoller] = React.useState(<DiceRollerD10 />)
+  const [roller, setRoller] = React.useState(<DiceRollerD10 />);
+  const [value, setValue] = React.useState('DicePoolSystem');
 
-  const chooseRollerCheck = () => {
-    if ($("#DicePoolSystem").is(':checked')) {
-      setRoller(<DiceRollerD10 />)
+  const chooseRollerCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let currentValue = (event.target as HTMLInputElement).value;
+    setValue(currentValue);
+    if (currentValue == "DicePoolSystem") {
+      setRoller(<DiceRollerD10 />);
     }
-    if ($("#d20System").is(':checked')) {
-      setRoller(<DiceRollerD20 />)
+    if (currentValue == "d20System") {
+      setRoller(<DiceRollerD20 />);
     }
   }
 
   return (
     <>
       <div className="Page p-4">
-        <div className="form-check">
-          <input className="form-check-input" type="radio" name="RollerChoice" defaultChecked
-            id="DicePoolSystem" onChange={chooseRollerCheck} />
-          <label className="form-check-label" htmlFor="DicePoolSystem">
-            Dice Pool System
-          </label>
-        </div>
-        <div className="form-check">
-          <input className="form-check-input" type="radio" name="RollerChoice"
-            id="d20System" onChange={chooseRollerCheck} />
-          <label className="form-check-label" htmlFor="d20System">
-            D20 System
-          </label>
-        </div>
+        <FormControl component="fieldset" variant="standard">
+          <RadioGroup defaultValue="DicePoolSystem" aria-labelledby="demo-radio-buttons-group-label"
+            name="radio-buttons-group" onChange={chooseRollerCheck} value={value}>
+            <FormControlLabel value="DicePoolSystem" control={<Radio />} label="Dice Pool System" />
+            <FormControlLabel value="d20System" control={<Radio />} label="D20 System" />
+          </RadioGroup>
+        </FormControl>
         {roller}
       </div>
     </>

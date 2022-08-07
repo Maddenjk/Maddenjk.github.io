@@ -1,3 +1,9 @@
+import { Button, ButtonGroup, Card } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
 import React from 'react';
 
 function DiceRollerD10() {
@@ -85,79 +91,53 @@ function DiceRollerD10() {
     }
 
     return (
-        <div className="form">
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="ExplodeMax"
-                    onChange={(event) => { setExplodeMax(event.target.checked) }} />
-                <label className="form-check-label" htmlFor="ExplodeMax">
-                    Explode Dice When Max Dice Roll Is Hit
-                </label>
-            </div>
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="OneRemovesSuccess"
-                    onChange={(event) => { setOneRemovesSuccess(event.target.checked) }} />
-                <label className="form-check-label" htmlFor="OneRemovesSuccess">
-                    Roll of 1 Removes a Success, unless on exploded dice
-                </label>
-            </div>
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="MaxCountsTwice"
-                    onChange={(event) => { setMaxCountsTwice(event.target.checked) }} />
-                <label className="form-check-label" htmlFor="MaxCountsTwice">
-                    Max Rolls Counts as Two Successes
-                </label>
-            </div>
-            <div className="row">
-                <div className="col-xl-5 col-lg-5 col-mid-5">
-                    <label className="form-label" htmlFor='NumberToBeat'>Number to Beat</label>
-                    <input type="text" onFocus={clearResult} className="form-control col-3"
-                        id="NumberToBeat" aria-label="NumberToBeat" value={numberToBeat}
-                        onChange={(e) => { setNumberToBeat(e.target.value) }} />
-                </div>
-            </div>
-            <div className="row">
-                <div style={{width: 132, marginLeft: 16}}>
-                    <label className="form-label" htmlFor="MaxRoll">Dice Type</label>
-                    <div className='form-inline'>
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">D</div>
-                        </div>
-                        <input type="text" className="form-control col 1" value={maxRoll}
-                            onChange={(e) => { setMaxRoll(e.target.value) }}
-                            id="MaxRoll" aria-label="MaxRoll" />
-                    </div>
-                </div>
-            </div>
-            <div className='row'>
-                <div className="col-xl-5 col-lg-5 col-mid-5">
-                    <label className="form-label" htmlFor='Amount'>Amount of Dice</label>
-                    <input type="text" onFocus={clearResult} className="form-control col-3" value={amountOfDice}
-                        onChange={(e) => { setAmountOfDice(e.target.value) }}
-                        id="Amount" aria-label="Amount" />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-xl-5 col-lg-5 col-mid-5 mr-3 mb-2">
-                    <label className="form-label" htmlFor='AutoSuccess'>Auto Successes</label>
-                    <input type="text" onFocus={clearResult} className="form-control col-3" value={autoSuccessString}
-                        onChange={(e) => { setAutoSuccessString(e.target.value) }}
-                        id="AutoSuccess" aria-label="AutoSuccess" />
-                </div>
-            </div>
+        <div>
+            <FormGroup>
+                <FormControlLabel control={<Checkbox id="ExplodeDice" value=""
+                    onChange={(event) => { setExplodeMax(event.target.checked) }} />}
+                    label="Explode Dice When Max Dice Roll Is Hit" />
+                <FormControlLabel control={<Checkbox id="OneRemovesSuccess" value=""
+                    onChange={(event) => { setOneRemovesSuccess(event.target.checked) }} />}
+                    label="Roll of 1 Removes a Success, unless on exploded dice" />
+                <FormControlLabel control={<Checkbox id="MaxRollTwoSuccess" value=""
+                    onChange={(event) => { setMaxCountsTwice(event.target.checked) }} />}
+                    label="Max Rolls Counts as Two Successes" />
+
+                <TextField id="NumberToBeat" label="Number to Beat" variant="outlined"
+                    value={numberToBeat}
+                    sx={{width: '25ch' }}
+                    onFocus={clearResult}
+                    onChange={(e) => { setNumberToBeat(e.target.value) }} />
+                <TextField
+                    label="Dice Type"
+                    id="MaxRoll"
+                    sx={{ mt: 2, width: '25ch' }}
+                    value={maxRoll}
+                    onFocus={clearResult}
+                    onChange={(e) => { setMaxRoll(e.target.value) }}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start">D</InputAdornment>,
+                    }}
+                />
+                <TextField id="Amount" label="Amount of Dice" variant="outlined"
+                    value={amountOfDice}
+                    sx={{mt: 2, width: '25ch' }}
+                    onFocus={clearResult}
+                    onChange={(e) => { setAmountOfDice(e.target.value) }} />
+                <TextField id="AutoSuccesses" label="Auto Successes" variant="outlined"
+                    value={autoSuccessString}
+                    sx={{my: 2, width: '25ch' }}
+                    onFocus={clearResult}
+                    onChange={(e) => { setAutoSuccessString(e.target.value) }} />   
+                <ButtonGroup sx={{mb: 2}}>
+                    <Button variant="contained" onClick={rollDice}>Roll</Button>
+                    <Button variant="text" onClick={clear}>Clear</Button>
+                </ButtonGroup> 
+                <TextField label="Result" multiline disabled={true} rows={8} id="result" value={results}></TextField>
+            </FormGroup>
             <div className="row">
                 <div className="col">
-                    <div className="btn-group form">
-                        <button type="button" className="primaryButton bg-primary" onClick={rollDice}>Roll</button>
-                        <div className="pull-right">
-                            <button type="button" className="secondaryButton" onClick={clear}>Clear</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col">
-                    <label htmlFor='result'>Result</label>
-                    <textarea className="form-control" disabled={true} rows={8} id="result" value={results}></textarea>
+
                 </div>
             </div>
         </div>
