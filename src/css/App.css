@@ -5,6 +5,8 @@ input {
     -ms-user-select: auto !important;
     -o-user-select: auto !important;
     user-select: auto !important;  
+    width: 90%;
+    height: 90%;
 }
 
 .Page { 

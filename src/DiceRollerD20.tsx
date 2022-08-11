@@ -1,11 +1,8 @@
 import React from 'react';
-import $ from 'jquery';
 import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import styled from '@mui/material/styles/styled';
@@ -93,6 +90,7 @@ function DiceRollerD20() {
     padding: theme.spacing(1),
     borderWidth: 0,
     borderRadius: 0,
+    height: 40,
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
@@ -100,9 +98,10 @@ function DiceRollerD20() {
   const PItem = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fafafa',
     ...theme.typography.body2,
-    padding: theme.spacing(1.11),
+    padding: theme.spacing(1),
     borderWidth: 0,
     borderRadius: 0,
+    height: 40,
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));

@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import DiceRollerD10 from './DiceRollerD10';
 import DiceRollerD20 from './DiceRollerD20';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -15,10 +14,10 @@ function DiceRoller() {
   const chooseRollerCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     let currentValue = (event.target as HTMLInputElement).value;
     setValue(currentValue);
-    if (currentValue == "DicePoolSystem") {
+    if (currentValue === "DicePoolSystem") {
       setRoller(<DiceRollerD10 />);
     }
-    if (currentValue == "d20System") {
+    if (currentValue === "d20System") {
       setRoller(<DiceRollerD20 />);
     }
   }

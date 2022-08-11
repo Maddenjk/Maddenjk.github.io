@@ -1,15 +1,16 @@
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Nav from 'react-bootstrap/Nav';
+import { ListItem, ListItemButton, ListItemText } from '@mui/material/'
 
 function TopBar() {
   return (
     <div>
       <AppBar className='NavBar' position="sticky">
-          <Nav className="me-auto">
-            <Nav.Link href="./DiceRoller">Dice Roller</Nav.Link>
-            {/* <Nav.Link href="./Login">Work In Progress</Nav.Link> */}
-          </Nav>
+      <ListItem key="LiDiceRoller" disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText primary="LiTextDiceRoller" />
+      </ListItemButton>
+      </ListItem>
       </AppBar>
     </div>
   );
