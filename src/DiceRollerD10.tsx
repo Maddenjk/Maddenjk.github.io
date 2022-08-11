@@ -58,7 +58,6 @@ function DiceRollerD10() {
                     sucesses += 1;
                 }
             }
-            value += +autoSuccessString || 0;
             if (value >= +numberToBeat) {
                 sucesses += 1;
             }
@@ -135,11 +134,6 @@ function DiceRollerD10() {
                 </ButtonGroup> 
                 <TextField label="Result" multiline disabled={true} rows={8} id="result" value={results}></TextField>
             </FormGroup>
-            <div className="row">
-                <div className="col">
-
-                </div>
-            </div>
         </div>
     );
 }
