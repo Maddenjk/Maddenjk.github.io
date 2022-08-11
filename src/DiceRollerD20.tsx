@@ -23,7 +23,7 @@ function DiceRollerD20() {
     let currentResults = ""
     for (let index = 0; index < diceTypeArray.length; index++) {
       let diceType = diceTypeArray[index];
-      if ($(amountofDices[index]) !== undefined && amountofDices[index] !== "") {
+      if (amountofDices[index] !== undefined && amountofDices[index] !== "") {
         let diceCount = Number.parseInt((amountofDices[index] || "0"));
         let modAmount = modifierStrings[index] || "";
         let modArray: string[] = []
@@ -51,7 +51,7 @@ function DiceRollerD20() {
     if (newResults) {
       newResults += "\n"
     }
-    newResults += ` D${diceType} ` + values.toString()
+    newResults += "D" + diceType + " " + values.toString()
     newResults += "\nTotal = " + diceRollTotal
     return newResults
   }
@@ -121,11 +121,12 @@ function DiceRollerD20() {
     for (let index = 0; index < diceTypeArray.length; index++) {
       let diceType = diceTypeArray[index];
       let diceTypeLabel = `D${diceType}`
+      let diceTypeKey = `D${diceType}Key`
       let textLabel = `D${diceType}Text`;
       let AmountLabel = `D${diceType}Amount`;
       let ModLabel = `D${diceType}Mod`;
       diceArray.push(
-        <Grid container spacing={0}>
+        <Grid container spacing={0} key={diceTypeKey}>
           <Grid item xs={2}>
           <PItem>
             <p aria-label={textLabel} id={textLabel}>{diceTypeLabel}</p>
